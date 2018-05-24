@@ -1,0 +1,69 @@
+README
+Assignment 4
+Ethan Hartzell
+ehartz01
+11/4/16
+
+What is it for? Who will use it?
+This GUI is going to be a simple game in which the player moves a Zamboni around a rink avoiding skaters, gaining points for clearing away ice blocks.
+There is a control panel at the top with several widgets. A button to deploy the zamboni with a combobox for selecting its color. Stop and resume buttons for stopping all vehicles on screen from moving, and an add skater button to add a skater to a random position with a speed chosen from a combo box.
+
+Game Rules:
+The idea is that the bigger risk you take the more points you can make. The game begins when you deploy the zamboni with the deploy button and the timer begins. The more skaters you put onto the map, and the faster their speed, the more points you can get from colliding with a slow moving ice block. Skaters that are not moving add no points. The ice will jump to a random location once you clear it away so you can find it again and get more points. If you collide with a skater, it will disappear and you will lose points equal to its speed. Points and possible points, as well as the remaining time are displayed in the upper right hand corner. When time runs out, the window will close and the score will be printed to the terminal. The player technically can cheat by using the stop and resume buttons. The player can select one of the vehicles on-screen (like the Zamboni) and use the directional buttons at the bottom of the screen to control its movement. The player cannot control the ice block. The goal is to direct the zamboni towards the ice block while getting skaters out of the way without stopping them.
+
+Note: the Scoreboard is a stand-in for the State Panel described in the assignment.
+Note: the player can select a vehicle by clicking on it. The player can control the vehicle's direction by using the direction buttons at the bottom of the screen.
+Note: Different things happen when the zamboni collides with different vehicle, as described in the game rules.
+Note: The player can zoom in and out with the + and - buttons in the control panel at the top.
+
+Inheritance Hierarchy:
+JFrame
+	Main
+JPanel
+	Map
+JButton
+	SkaterButton
+	DeployButton
+	ResumeButton
+	StopButton
+	ZButton (zooming)
+	DButton
+JComboBox
+	ZamboniColorChoice
+	SpeedChoice
+Vehicle
+	Zamboni
+	Skater
+	Ice
+Scoreboard
+
+Aggregate Hierarchy:
+Main
+	Timer
+	DButton (five of them, in flowlayouts in southern borderlayout)
+	ZButton (+ and - for in and out)
+	SkaterButton
+	DeployButton
+	ZamboniColorChoice
+	SpeedChoice
+	ResumeButton
+	StopButton
+
+	Map
+		Zamboni
+		ArrayList of Skaters
+		Ice
+		Scoreboard
+
+Collaboration:
+DeployButton and ZamboniColorChoice affect the Zamboni
+SpeedChoice affects SkaterButton, which affects Skater.
+Resume and Stop buttons act on the map which then loops through and calls methods for resuming and stopping on all vehicles.
+DButtons affect whatever Vehicle on the map is selected, which is selected via a mouselistener in the map.
+ZButtons affect every vehicle on the map.
+
+Class Secrets:
+Vehicles handle their own drawing, ticking, resuming, and stopping.
+Zamboni handles its collisions by checking the corners of its bounding box against every other vehicle on the map.
+The actual initial direction of the zamboni is determined by the DeployButton.
+Zooming is handled entirely within vehicle classes.
